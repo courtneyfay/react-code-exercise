@@ -99,3 +99,7 @@ The solution will be evaluated against the following criteria:
 ## Bonus
 
 - Tests that demonstrate the code works correctly and handles anything that might be thrown at it.
+
+## Coolors styling
+
+https://coolors.co/93827f-6ba292-35ce8d-bcd8b7-e0d2c3
