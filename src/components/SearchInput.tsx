@@ -16,9 +16,23 @@ const FormWrapper = styled.form`
 const SearchInput = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
-    const handleSubmit = (event: FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        console.log('hitting handleSubmit', searchTerm)
+
+        const response = await fetch('https://api.github.com/search/repositories?' + new URLSearchParams({
+            q: searchTerm,
+        }));
+
+        if (!response.ok) {
+            const message = `An error has occured: ${response.status}`;
+            //TODO: update with more graceful handling
+            throw new Error(message);
+        }
+        
+        const responseJSON = await response.json();
+        const items = responseJSON?.items;
+
+        console.log('response', items);
     }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
