@@ -65,6 +65,7 @@ const SearchInput = ({
                 autoComplete="off"
                 value={searchTerm}
                 onChange={handleChange}
+                required
             />
             <PrimaryButton
                 type="submit"
