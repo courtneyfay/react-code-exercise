@@ -23,27 +23,10 @@ interface Props {
 
 const SortAndFilter = ({ searchTerm, results, setLoading, setError, setResults }: Props) => {
 
-    const handleMatch = async () => {
+    const handleClick = async (sort?: string) => {
         setLoading(true);
 
-        const response = await repositorySearch({searchTerm});
-
-        if (!response.ok) {
-            const message = `An error has occured: ${response.status}`;
-            setError(message);
-        }
-        
-        const responseJSON = await response.json();
-        const items = responseJSON?.items;
-        
-        setResults(items);
-        setLoading(false);
-    }
-
-    const handleStar = async () => {
-        setLoading(true);
-
-        const response = await repositorySearch({searchTerm, sort: 'stars'});
+        const response = await repositorySearch({searchTerm, sort});
 
         if (!response.ok) {
             const message = `An error has occured: ${response.status}`;
@@ -62,8 +45,8 @@ const SortAndFilter = ({ searchTerm, results, setLoading, setError, setResults }
     return (
         <Wrapper>
             <Span>Sort by:</Span>
-            <SecondaryButton onClick={handleMatch}>Best Match (default)</SecondaryButton>
-            <SecondaryButton onClick={handleStar}>Stars</SecondaryButton>
+            <SecondaryButton onClick={() => handleClick()}>Best Match (default)</SecondaryButton>
+            <SecondaryButton onClick={() => handleClick('stars')}>Stars</SecondaryButton>
         </Wrapper>
         )
 }
