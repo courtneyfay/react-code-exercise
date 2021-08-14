@@ -28,6 +28,13 @@ Third, you will need to add web vitals, by running:
 
 - `yarn add web-vitals`
 
+Finally, you will need to add some special packages for typescript, by running:
+
+- `yarn add @types/react`
+- `yarn add @types/react-dom`
+
+You should run reach of these commands separately in the Terminal
+
 ### To Run the Project Locally
 
 - `yarn start`
