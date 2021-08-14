@@ -15,14 +15,21 @@ const FormWrapper = styled.form`
 `;
 
 interface Props {
-    setResults: (arg1: ResultType[]) => void,
+    setResults: (arg0: ResultType[]) => void
+    setError: (arg0: string) => void
+    setLoading: (arg0: boolean) => void
 }
 
-const SearchInput = ({ setResults }: Props) => {
+const SearchInput = ({
+        setResults,
+        setError,
+        setLoading,
+    }: Props) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+        setLoading(true);
 
         const response = await fetch('https://api.github.com/search/repositories?' + new URLSearchParams({
             q: searchTerm,
@@ -30,14 +37,14 @@ const SearchInput = ({ setResults }: Props) => {
 
         if (!response.ok) {
             const message = `An error has occured: ${response.status}`;
-            //TODO: update with more graceful handling
-            throw new Error(message);
+            setError(message);
         }
         
         const responseJSON = await response.json();
         const items = responseJSON?.items;
-
-        setResults(items)
+        
+        setResults(items);
+        setLoading(false);
     }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

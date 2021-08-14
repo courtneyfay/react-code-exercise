@@ -11,12 +11,24 @@ type ResultType = {
 
 const Search = () => {
     const [results, setResults] = useState<ResultType[]>();
+    const [error, setError] = useState<string>();
+    const [loading, setLoading] = useState<boolean>();
 
     return (
         <Page>
-            <HeaderOne>Search Github Repositories</HeaderOne>
-            <SearchInput setResults={setResults} />
-            <SearchResults results={results} />
+            <HeaderOne>
+                Search Github Repositories
+            </HeaderOne>
+            <SearchInput
+                setResults={setResults}
+                setError={setError}
+                setLoading={setLoading}
+            />
+            <SearchResults
+                results={results}
+                error={error}
+                loading={loading}
+            />
         </Page>
     )
 };
