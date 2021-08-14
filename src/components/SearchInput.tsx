@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Label from '../styled-components/Label';
 import Input from '../styled-components/Input';
 import { PrimaryButton } from '../styled-components/Button';
+import { ResultType } from '../views/Search';
 
 const FormWrapper = styled.form`
     width: 45%;
@@ -13,7 +14,11 @@ const FormWrapper = styled.form`
     align-items: center;
 `;
 
-const SearchInput = () => {
+interface Props {
+    setResults: (arg1: ResultType[]) => void,
+}
+
+const SearchInput = ({ setResults }: Props) => {
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSubmit = async (event: FormEvent) => {
@@ -32,7 +37,7 @@ const SearchInput = () => {
         const responseJSON = await response.json();
         const items = responseJSON?.items;
 
-        console.log('response', items);
+        setResults(items)
     }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
