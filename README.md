@@ -18,7 +18,11 @@ In the project directory, you can run:
 
 - `yarn`
 
-This will install all the package dependencies. Must be run before `yarn start` or `yarn test`
+This will install most of the package dependencies. Must be run before `yarn start` or `yarn test`
+
+Next, you will need to install typescript, by running:
+
+- `yarn add typescript`
 
 ### To Run the Project Locally
 
