@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 const PrimaryButton = styled.button`
@@ -8,6 +7,7 @@ const PrimaryButton = styled.button`
     border: unset;
     border-radius: 4px;
     padding: 1% 5%;
+    cursor: pointer;
 `;
 
 export {
