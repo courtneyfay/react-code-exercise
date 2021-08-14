@@ -24,6 +24,10 @@ Next, you will need to install typescript, by running:
 
 - `yarn add typescript`
 
+Third, you will need to add web vitals, by running:
+
+- `yarn add web-vitals`
+
 ### To Run the Project Locally
 
 - `yarn start`
