@@ -1,9 +1,10 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import Label from '../styled-components/Label';
 import Input from '../styled-components/Input';
 import { PrimaryButton } from '../styled-components/Button';
 import { ResultType } from '../views/Search';
+import repositorySearch from '../services/repositorySearch';
 
 const FormWrapper = styled.form`
     width: 45%;
@@ -15,25 +16,26 @@ const FormWrapper = styled.form`
 `;
 
 interface Props {
+    searchTerm: string
+    setSearchTerm: (arg0: string) => void
     setResults: (arg0: ResultType[]) => void
     setError: (arg0: string) => void
     setLoading: (arg0: boolean) => void
 }
 
 const SearchInput = ({
+        searchTerm,
+        setSearchTerm,
         setResults,
         setError,
         setLoading,
     }: Props) => {
-    const [searchTerm, setSearchTerm] = useState('');
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         setLoading(true);
 
-        const response = await fetch('https://api.github.com/search/repositories?' + new URLSearchParams({
-            q: searchTerm,
-        }));
+        const response = await repositorySearch({searchTerm});
 
         if (!response.ok) {
             const message = `An error has occured: ${response.status}`;

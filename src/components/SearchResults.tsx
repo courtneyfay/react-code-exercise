@@ -19,9 +19,10 @@ const SearchResults = ({
 
         return results?.map(result => {
             return (
-                <TableRow key={result.git_url}>
+                <TableRow key={result.html_url}>
                     <TableData>{result.name}</TableData>
-                    <TableData>{result.git_url}</TableData>
+                    <TableData>{result.html_url}</TableData>
+                    <TableData>{result.stargazers_count}</TableData>
                 </TableRow>
             )
         })
@@ -33,6 +34,7 @@ const SearchResults = ({
                 <TableRow>
                     <TableHeader>Repo Name</TableHeader>
                     <TableHeader>GitHub URL</TableHeader>
+                    <TableHeader>Star Count</TableHeader>
                 </TableRow>
             </thead>
             <tbody>

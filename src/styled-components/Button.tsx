@@ -1,15 +1,26 @@
 import styled from 'styled-components';
 
-const PrimaryButton = styled.button`
-    background-color: #35CE8D;
+const Button = styled.button`
     color: white;
-    font-size: 20px;
     border: unset;
     border-radius: 4px;
-    padding: 1% 5%;
     cursor: pointer;
+`;
+    
+const PrimaryButton = styled(Button)`
+    background-color: #35CE8D;
+    font-size: 20px;
+    padding: 1% 5%;
+`;
+
+const SecondaryButton = styled(Button)`
+    background-color: #6BA292;
+    font-size: 14px;
+    padding: 1% 2%;
+    margin-right: 1%;
 `;
 
 export {
     PrimaryButton,
+    SecondaryButton,
 }
