@@ -23,6 +23,7 @@ const SearchResults = ({
                     <TableData>{result.name}</TableData>
                     <TableData>{result.html_url}</TableData>
                     <TableData>{result.stargazers_count}</TableData>
+                    <TableData>{result.language}</TableData>
                 </TableRow>
             )
         })
@@ -35,6 +36,7 @@ const SearchResults = ({
                     <TableHeader>Repo Name</TableHeader>
                     <TableHeader>GitHub URL</TableHeader>
                     <TableHeader>Star Count</TableHeader>
+                    <TableHeader>Language</TableHeader>
                 </TableRow>
             </thead>
             <tbody>

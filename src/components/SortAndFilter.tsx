@@ -1,8 +1,10 @@
 import { ResultType } from '../views/Search';
 import { SecondaryButton } from '../styled-components/Button';
 import Span from '../styled-components/Span';
+import { DropdownSelect, DropdownOption } from '../styled-components/Dropdown';
 import styled from 'styled-components';
 import repositorySearch from '../services/repositorySearch';
+import { ChangeEvent } from 'react';
 
 const Wrapper = styled.div`
     width: 50%;
@@ -22,8 +24,19 @@ interface Props {
 }
 
 const SortAndFilter = ({ searchTerm, results, setLoading, setError, setResults }: Props) => {
+    const languageOptions = results?.map(result => result.language);
 
-    const handleClick = async (sort?: string) => {
+    const handleFilter = (e: ChangeEvent<HTMLSelectElement>) => {
+        const language = e.target.value;
+        const filteredResults = results?.filter(result => {
+            return result.language === language;
+        });
+        if (filteredResults) {
+            setResults(filteredResults)
+        }
+    }
+
+    const handleSort = async (sort?: string) => {
         setLoading(true);
 
         const response = await repositorySearch({searchTerm, sort});
@@ -45,8 +58,26 @@ const SortAndFilter = ({ searchTerm, results, setLoading, setError, setResults }
     return (
         <Wrapper>
             <Span>Sort by:</Span>
-            <SecondaryButton onClick={() => handleClick()}>Best Match (default)</SecondaryButton>
-            <SecondaryButton onClick={() => handleClick('stars')}>Stars</SecondaryButton>
+            <SecondaryButton onClick={() => handleSort()}>Best Match (default)</SecondaryButton>
+            <SecondaryButton onClick={() => handleSort('stars')}>Stars</SecondaryButton>
+            <Span>Filter by:</Span>
+            <DropdownSelect
+                name="language"
+                id="language-select"
+                onChange={(e) => handleFilter(e)}
+            >
+                <DropdownOption value="">--Language--</DropdownOption>
+                {languageOptions?.map(option => {
+                    return (
+                        <DropdownOption
+                            value={option}
+                            key={option}
+                        >
+                            {option}
+                        </DropdownOption>
+                    )
+                })}
+            </DropdownSelect>
         </Wrapper>
         )
 }
