@@ -1,12 +1,14 @@
 import React from 'react';
 import SearchInput from '../components/SearchInput';
+import { HeaderOne } from '../styled-components/Header';
+import Page from '../styled-components/Page';
 
 const Search = () => {
     return (
-        <>
-            <h1>Search Github Repositories</h1>
+        <Page>
+            <HeaderOne>Search Github Repositories</HeaderOne>
             <SearchInput />
-        </>
+        </Page>
     )
 };
 
