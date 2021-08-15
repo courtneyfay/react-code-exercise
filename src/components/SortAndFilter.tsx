@@ -25,7 +25,21 @@ interface Props {
 }
 
 const SortAndFilter = ({ searchTerm, results, setLoading, setError, setResults, setFilteredResults }: Props) => {
-    const languageOptions = results?.map(result => result.language);
+    const languageOptions = results?.reduce<string[]>(
+        (accumulator: any, result: any) => {
+            const alreadyThere = accumulator.some((value: string) => (value === result.language)); 
+            //check to see if language already exists in the list and if language has a value/is not null
+            if (!alreadyThere && result.language) {
+                return [
+                    ...accumulator,
+                    result.language,
+                ];
+            }
+            return accumulator;
+        },
+        [] // initial value
+    );
+    const alphabetizedLanguageOptions = languageOptions?.sort();
 
     const handleFilter = (e: ChangeEvent<HTMLSelectElement>) => {
         const language = e.target.value;
@@ -68,7 +82,7 @@ const SortAndFilter = ({ searchTerm, results, setLoading, setError, setResults, 
                 onChange={(e) => handleFilter(e)}
             >
                 <DropdownOption value="">--Language--</DropdownOption>
-                {languageOptions?.map(option => {
+                {alphabetizedLanguageOptions?.map(option => {
                     return (
                         <DropdownOption
                             value={option}
