@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Table, TableRow, TableHeader, TableData } from '../styled-components/Table';
 import { ResultType } from '../views/Search';
 
@@ -21,9 +22,13 @@ const SearchResults = ({
         if (loading) return <tr><td>Loading ...</td></tr>
 
         return displayResults?.map(result => {
+            const urlParam = `/${result.name.replace(/\s/g,'')}`;
+
             return (
                 <TableRow key={result.html_url}>
-                    <TableData>{result.name}</TableData>
+                    <TableData>
+                        <Link to={urlParam}>{result.name}</Link>
+                    </TableData>
                     <TableData>{result.html_url}</TableData>
                     <TableData>{result.stargazers_count}</TableData>
                     <TableData>{result.language}</TableData>
