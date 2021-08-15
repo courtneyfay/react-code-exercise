@@ -20,7 +20,14 @@ const SecondaryButton = styled(Button)`
     margin-right: 1%;
 `;
 
+const LinkButton = styled(Button)`
+    background-color: unset;
+    color: #93827F;
+    text-decoration: underline;
+`;
+
 export {
     PrimaryButton,
     SecondaryButton,
+    LinkButton,
 }
