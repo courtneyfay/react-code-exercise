@@ -5,19 +5,22 @@ interface Props {
     error?: string
     results?: ResultType[]
     loading?: boolean
+    filteredResults?: ResultType[]
 }
 
 const SearchResults = ({
         results,
         error,
         loading,
+        filteredResults,
     }: Props ) => {
+    const displayResults = filteredResults ? filteredResults : results;
 
     const tableBody = () => {
         if (error) return <tr><td>{error}</td></tr>
         if (loading) return <tr><td>Loading ...</td></tr>
 
-        return results?.map(result => {
+        return displayResults?.map(result => {
             return (
                 <TableRow key={result.html_url}>
                     <TableData>{result.name}</TableData>

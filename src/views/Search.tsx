@@ -15,6 +15,7 @@ type ResultType = {
 const Search = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState<ResultType[]>();
+    const [filteredResults, setFilteredResults] = useState<ResultType[]>();
     const [error, setError] = useState<string>();
     const [loading, setLoading] = useState<boolean>();
 
@@ -31,6 +32,7 @@ const Search = () => {
                 setLoading={setLoading}
             />
             <SortAndFilter
+                setFilteredResults={setFilteredResults}
                 setResults={setResults}
                 setError={setError}
                 setLoading={setLoading}
@@ -39,6 +41,7 @@ const Search = () => {
             />
             <SearchResults
                 results={results}
+                filteredResults={filteredResults}
                 error={error}
                 loading={loading}
             />

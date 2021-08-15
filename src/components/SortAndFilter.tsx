@@ -19,11 +19,12 @@ interface Props {
     setResults: (arg0: ResultType[]) => void
     setError: (arg0: string) => void
     setLoading: (arg0: boolean) => void
+    setFilteredResults: (arg0: ResultType[]) => void
     searchTerm: string
     results?: ResultType[]
 }
 
-const SortAndFilter = ({ searchTerm, results, setLoading, setError, setResults }: Props) => {
+const SortAndFilter = ({ searchTerm, results, setLoading, setError, setResults, setFilteredResults }: Props) => {
     const languageOptions = results?.map(result => result.language);
 
     const handleFilter = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -32,7 +33,7 @@ const SortAndFilter = ({ searchTerm, results, setLoading, setError, setResults }
             return result.language === language;
         });
         if (filteredResults) {
-            setResults(filteredResults)
+            setFilteredResults(filteredResults)
         }
     }
 
