@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Label from '../styled-components/Label';
 import Input from '../styled-components/Input';
 import { PrimaryButton } from '../styled-components/Button';
-import { ResultType } from '../views/Search';
+import { ResultType } from '../types/ResultType';
 import repositorySearch from '../services/repositorySearch';
 
 const FormWrapper = styled.form`

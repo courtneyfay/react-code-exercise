@@ -5,7 +5,6 @@ const Table = styled.table`
 `;
 
 const TableRow = styled.tr`
-    background-color: #BCD8B7;
 `
 
 const TableHeader = styled.th`

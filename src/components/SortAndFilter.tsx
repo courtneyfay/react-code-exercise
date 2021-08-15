@@ -1,4 +1,4 @@
-import { ResultType } from '../views/Search';
+import { ResultType } from '../types/ResultType';
 import { LinkButton, SecondaryButton } from '../styled-components/Button';
 import Span from '../styled-components/Span';
 import { DropdownSelect, DropdownOption } from '../styled-components/Dropdown';

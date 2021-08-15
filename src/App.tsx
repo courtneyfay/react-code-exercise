@@ -3,18 +3,22 @@ import {
   Switch,
   Route,
 } from 'react-router-dom';
+import { useState } from 'react';
 import Search from './views/Search';
 import DetailedResult from './views/DetailedResult';
+import { ResultType } from './types/ResultType';
 
 function App() {
+  const [detail, setDetail] = useState<ResultType>();
+
   return (
     <Router>
       <Switch>
         <Route path="/:id">
-          <DetailedResult />
+          <DetailedResult detail={detail} />
         </Route>
         <Route exact path="/">
-          <Search />
+          <Search setDetail={setDetail} />
         </Route>
       </Switch>
     </Router>
