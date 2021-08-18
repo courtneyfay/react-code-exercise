@@ -4,17 +4,16 @@ import SearchResults from '../components/SearchResults';
 import SortAndFilter from '../components/SortAndFilter';
 import { HeaderOne } from '../styled-components/Header';
 import Page from '../styled-components/Page';
+import { ResultType } from '../types/ResultType';
 
-type ResultType = {
-    name: string
-    html_url: string
-    stargazers_count: number
-    language: string
+interface Props {
+    setDetail: (arg0?: ResultType) => void
 }
 
-const Search = () => {
+const Search = ({ setDetail }: Props) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [results, setResults] = useState<ResultType[]>();
+    const [filteredResults, setFilteredResults] = useState<ResultType[]>();
     const [error, setError] = useState<string>();
     const [loading, setLoading] = useState<boolean>();
 
@@ -31,6 +30,7 @@ const Search = () => {
                 setLoading={setLoading}
             />
             <SortAndFilter
+                setFilteredResults={setFilteredResults}
                 setResults={setResults}
                 setError={setError}
                 setLoading={setLoading}
@@ -38,7 +38,9 @@ const Search = () => {
                 results={results}
             />
             <SearchResults
+                setDetail={setDetail}
                 results={results}
+                filteredResults={filteredResults}
                 error={error}
                 loading={loading}
             />
@@ -47,7 +49,3 @@ const Search = () => {
 };
 
 export default Search;
-
-export type {
-    ResultType,
-}

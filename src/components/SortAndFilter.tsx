@@ -1,10 +1,10 @@
-import { ResultType } from '../views/Search';
-import { SecondaryButton } from '../styled-components/Button';
+import { ResultType } from '../types/ResultType';
+import { LinkButton, SecondaryButton } from '../styled-components/Button';
 import Span from '../styled-components/Span';
 import { DropdownSelect, DropdownOption } from '../styled-components/Dropdown';
 import styled from 'styled-components';
 import repositorySearch from '../services/repositorySearch';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 const Wrapper = styled.div`
     width: 50%;
@@ -13,26 +13,52 @@ const Wrapper = styled.div`
     flex-wrap: wrap;
     justify-content: flex-end;
     align-items: center;
+    margin-bottom: 0.5%;
 `;
 
 interface Props {
     setResults: (arg0: ResultType[]) => void
     setError: (arg0: string) => void
     setLoading: (arg0: boolean) => void
+    setFilteredResults: (arg0: ResultType[]) => void
     searchTerm: string
     results?: ResultType[]
 }
 
-const SortAndFilter = ({ searchTerm, results, setLoading, setError, setResults }: Props) => {
-    const languageOptions = results?.map(result => result.language);
+const SortAndFilter = ({
+    searchTerm,
+    results,
+    setLoading,
+    setError,
+    setResults,
+    setFilteredResults,
+}: Props) => {
+    const [selected, setSelected] = useState<string>("");
+
+    const languageOptions = results?.reduce<string[]>(
+        (accumulator: any, result: any) => {
+            const alreadyThere = accumulator.some((value: string) => (value === result.language)); 
+            //check to see if language already exists in the list and if language has a value/is not null
+            if (!alreadyThere && result.language) {
+                return [
+                    ...accumulator,
+                    result.language,
+                ];
+            }
+            return accumulator;
+        },
+        [] // initial value
+    );
+    const alphabetizedLanguageOptions = languageOptions?.sort();
 
     const handleFilter = (e: ChangeEvent<HTMLSelectElement>) => {
         const language = e.target.value;
+        setSelected(language);
         const filteredResults = results?.filter(result => {
             return result.language === language;
         });
         if (filteredResults) {
-            setResults(filteredResults)
+            setFilteredResults(filteredResults)
         }
     }
 
@@ -53,33 +79,44 @@ const SortAndFilter = ({ searchTerm, results, setLoading, setError, setResults }
         setLoading(false);
     }
 
+    const handleClearFilter = (results: ResultType[]) => {
+        setFilteredResults(results)
+        setSelected("none");
+    }
+
     if (!results) return null;
 
     return (
-        <Wrapper>
-            <Span>Sort by:</Span>
-            <SecondaryButton onClick={() => handleSort()}>Best Match (default)</SecondaryButton>
-            <SecondaryButton onClick={() => handleSort('stars')}>Stars</SecondaryButton>
-            <Span>Filter by:</Span>
-            <DropdownSelect
-                name="language"
-                id="language-select"
-                onChange={(e) => handleFilter(e)}
-            >
-                <DropdownOption value="">--Language--</DropdownOption>
-                {languageOptions?.map(option => {
-                    return (
-                        <DropdownOption
-                            value={option}
-                            key={option}
-                        >
-                            {option}
-                        </DropdownOption>
-                    )
-                })}
-            </DropdownSelect>
-        </Wrapper>
-        )
+        <>
+            <Wrapper>
+                <Span>Sort by:</Span>
+                <SecondaryButton onClick={() => handleSort()}>Best Match (default)</SecondaryButton>
+                <SecondaryButton onClick={() => handleSort('stars')}>Stars</SecondaryButton>
+            </Wrapper>
+            <Wrapper>
+                <Span>Filter by:</Span>
+                <DropdownSelect
+                    name="language"
+                    id="language-select"
+                    value={selected}
+                    onChange={(e) => handleFilter(e)}
+                >
+                    <DropdownOption value="none">--Language--</DropdownOption>
+                    {alphabetizedLanguageOptions?.map(option => {
+                        return (
+                            <DropdownOption
+                                value={option}
+                                key={option}
+                            >
+                                {option}
+                            </DropdownOption>
+                        )
+                    })}
+                </DropdownSelect>
+                <LinkButton onClick={() => handleClearFilter(results)}>Clear Filter</LinkButton>
+            </Wrapper>
+        </>
+    )
 }
 
 export default SortAndFilter;
